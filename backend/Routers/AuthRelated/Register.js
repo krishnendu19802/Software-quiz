@@ -1,5 +1,5 @@
-const db = require('../config/database');
-const { encrypt } = require('../Helper/PasswordHashing');
+const db = require('../../config/database');
+const { encrypt } = require('../../Helper/PasswordHashing');
 
 const register = async (req, res) => {
     const { name, email, password } = req.body;

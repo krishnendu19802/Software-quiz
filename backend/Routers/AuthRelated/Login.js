@@ -1,5 +1,5 @@
-const db = require('../config/database');
-const { decrypt } = require('../Helper/PasswordHashing');
+const db = require('../../config/database');
+const { decrypt } = require('../../Helper/PasswordHashing');
 const jwt = require('jsonwebtoken');
 const login = async (req, res) => {
     // console.log('Hi')

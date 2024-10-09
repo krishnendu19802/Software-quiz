@@ -14,7 +14,7 @@ beforeEach(async () => {
 // Clean up after all tests
 afterAll(async () => {
     await db.promise().end();
-    server.close();
+    await server.close();
 });
 
 // Test cases for adding an admin
@@ -24,7 +24,9 @@ const adminToken = jwt.sign(
     { expiresIn: '1h' }
 );
 const route='/api/addadmin'
-
+beforeAll(() => {
+    process.env.PORT = 0;  // This will make the server choose an available random port
+});
 const cases = [
     { case: 'both name, email, and password missing' }, // All missing
     { name: 'Admin', case: 'email and password missing' }, // Email and password missing

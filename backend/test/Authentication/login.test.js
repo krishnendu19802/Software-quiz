@@ -9,7 +9,9 @@ beforeEach(async () => {
     const hashedPassword = await encrypt('password123');
     await db.promise().query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', ['Test User', 'test@example.com', hashedPassword]);
 });
-
+beforeAll(() => {
+    process.env.PORT = 0;  // This will make the server choose an available random port
+});
 // Clean up after all tests
 
 const cases=[
@@ -21,9 +23,10 @@ const cases=[
     {email:'test@example.com',password:'password123'}//everything right
 ]
 const route='/api/login'
+
 afterAll(async () => {
     await db.promise().end();
-    server.close()
+    await server.close()
     // process.exit(0)
 });
 describe('Login API', () => {

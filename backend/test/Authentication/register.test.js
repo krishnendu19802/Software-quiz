@@ -6,9 +6,13 @@ beforeEach(async () => {
     await db.promise().query('DELETE FROM users where userId!=1');  // Clear existing data except admin
 });
 
+
 afterAll(async () => {
     await db.promise().end();
-    server.close();
+    await server.close();
+});
+beforeAll(() => {
+    process.env.PORT = 0;  // This will make the server choose an available random port
 });
 
 const cases = [
