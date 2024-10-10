@@ -33,7 +33,7 @@ const login = async (req, res) => {
             process.env.JWT_SECRET,
             { expiresIn: '1h' } // Token expires in 1 hour
          );
-        res.status(200).json({ message: 'Login successful',token, user: { name:user.name, email: user.email } });
+        res.status(200).json({ message: 'Login successful',token, user: { name:user.name, email: user.email,admin:user.admin } });
 
     } catch (err) {
         return res.status(500).json({ error: 'Database error' });
