@@ -1,0 +1,108 @@
+create database mainQuiz;
+
+use mainQuiz;
+
+create table users (
+userId int AUTO_INCREMENT primary key,
+name varchar(255),
+email varchar(255),
+password varchar(255),
+admin int default 0
+);
+
+
+update users set admin=1 where userId=1; // to make first account as admin
+
+
+create table topics(
+topicId int auto_increment primary key,
+userId int,
+topicName varchar(255)
+);
+
+
+
+create table questions(
+topicId int,
+userId int,
+questionId int auto_increment primary key,
+statement varchar(255),
+option1 varchar(255),
+option2 varchar(255),
+option3 varchar(255),
+option4 varchar(255),
+ansIndex int default 0
+);
+
+
+CREATE TABLE questionHistory (
+    userId INT,
+    topicId INT,
+    questionId INT,
+    status INT DEFAULT 0,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+create table quizHistory(
+quizId int auto_increment primary key,
+userId int,
+timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+score int
+);
+
+create table leaderBoard(
+userId int ,
+score int
+);
+
+-- if topic with topic Id 1 is science then this follows:
+
+--science question
+INSERT INTO questions (topicId, userId, statement, option1, option2, option3, option4, ansIndex) 
+VALUES 
+(1, 1, 'What is the chemical symbol for water?', 'H2O', 'CO2', 'O2', 'H2', 1),
+(1, 1, 'Which planet is known as the Red Planet?', 'Earth', 'Mars', 'Jupiter', 'Saturn', 2),
+(1, 1, 'What is the hardest natural substance on Earth?', 'Gold', 'Iron', 'Diamond', 'Steel', 3),
+(1, 1, 'Which gas do plants absorb from the atmosphere?', 'Oxygen', 'Nitrogen', 'Carbon Dioxide', 'Hydrogen', 3),
+(1, 1, 'What is the primary source of energy for Earth?', 'The Moon', 'The Sun', 'Wind', 'Geothermal Energy', 2),
+(1, 1, 'What is the boiling point of water at sea level?', '100°C', '90°C', '80°C', '120°C', 1),
+(1, 1, 'Which part of the plant conducts photosynthesis?', 'Roots', 'Stem', 'Flowers', 'Leaves', 4),
+(1, 1, 'What is the center of an atom called?', 'Electron', 'Nucleus', 'Proton', 'Neutron', 2),
+(1, 1, 'What force keeps planets in orbit around the sun?', 'Magnetism', 'Nuclear Force', 'Gravity', 'Friction', 3),
+(1, 1, 'What is the most abundant gas in Earth’s atmosphere?', 'Oxygen', 'Hydrogen', 'Nitrogen', 'Carbon Dioxide', 3),
+(1, 1, 'Which vitamin is produced when the skin is exposed to sunlight?', 'Vitamin A', 'Vitamin C', 'Vitamin D', 'Vitamin B12', 3),
+(1, 1, 'What is the chemical symbol for gold?', 'Au', 'Ag', 'Fe', 'Pt', 1),
+(1, 1, 'Which planet has the most moons?', 'Earth', 'Mars', 'Jupiter', 'Saturn', 3),
+(1, 1, 'What type of energy is stored in a stretched rubber band?', 'Kinetic Energy', 'Thermal Energy', 'Elastic Potential Energy', 'Nuclear Energy', 3),
+(1, 1, 'How many bones are in the human body?', '206', '205', '210', '250', 1),
+(1, 1, 'What is the process by which plants make their food?', 'Respiration', 'Digestion', 'Photosynthesis', 'Excretion', 3),
+(1, 1, 'Which planet is the hottest in the solar system?', 'Venus', 'Mercury', 'Mars', 'Neptune', 1),
+(1, 1, 'What is the main gas found in the air we breathe?', 'Oxygen', 'Hydrogen', 'Carbon Dioxide', 'Nitrogen', 4),
+(1, 1, 'What is the smallest unit of matter?', 'Cell', 'Electron', 'Atom', 'Molecule', 3),
+(1, 1, 'What is the chemical formula for salt?', 'NaCl', 'H2O', 'C2H5OH', 'CO2', 1);
+ 
+-- if topic with topic Id 2  is history then this follows:
+
+INSERT INTO questions (topicId, userId, statement, option1, option2, option3, option4, ansIndex) 
+VALUES 
+(2, 1, 'Who was the first Prime Minister of India?', 'Jawaharlal Nehru', 'Mahatma Gandhi', 'Sardar Patel', 'Subhash Chandra Bose', 1),
+(2, 1, 'Which Indian King was known for his strong navy?', 'Ashoka', 'Chandragupta Maurya', 'Raja Raja Chola', 'Harsha', 3),
+(2, 1, 'The Battle of Plassey was fought in which year?', '1757', '1764', '1857', '1805', 1),
+(2, 1, 'Who was the founder of the Maurya Empire?', 'Ashoka', 'Bindusara', 'Chandragupta Maurya', 'Bimbisara', 3),
+(2, 1, 'Who was the viceroy of India during the Quit India Movement?', 'Lord Irwin', 'Lord Wavell', 'Lord Mountbatten', 'Lord Linlithgow', 4),
+(2, 1, 'Which movement was started by Mahatma Gandhi in 1942?', 'Non-Cooperation Movement', 'Swadeshi Movement', 'Quit India Movement', 'Civil Disobedience Movement', 3),
+(2, 1, 'Who was the first woman to rule Delhi?', 'Raziyya Sultan', 'Nur Jahan', 'Indira Gandhi', 'Lakshmi Bai', 1),
+(2, 1, 'The famous slogan "Give me blood and I will give you freedom" was said by?', 'Mahatma Gandhi', 'Jawaharlal Nehru', 'Bhagat Singh', 'Subhash Chandra Bose', 4),
+(2, 1, 'Who built the Taj Mahal?', 'Akbar', 'Shah Jahan', 'Babur', 'Aurangzeb', 2),
+(2, 1, 'Who was the founder of the Mughal Empire in India?', 'Akbar', 'Babur', 'Aurangzeb', 'Humayun', 2),
+(2, 1, 'In which year did India gain independence?', '1947', '1950', '1857', '1919', 1),
+(2, 1, 'Who was the last Governor-General of independent India?', 'Lord Mountbatten', 'C. Rajagopalachari', 'Sardar Patel', 'Vallabhbhai Patel', 2),
+(2, 1, 'Which Indian state was created in 1960 by splitting the Bombay state?', 'Madhya Pradesh', 'Gujarat', 'Punjab', 'Rajasthan', 2),
+(2, 1, 'Who gave the slogan "Jai Jawan Jai Kisan"?', 'Jawaharlal Nehru', 'Indira Gandhi', 'Lal Bahadur Shastri', 'Rajendra Prasad', 3),
+(2, 1, 'Who was the first Indian to be awarded the Bharat Ratna?', 'Dr. S. Radhakrishnan', 'Mahatma Gandhi', 'C. V. Raman', 'Subhash Chandra Bose', 3),
+(2, 1, 'Which British Governor-General introduced the Doctrine of Lapse?', 'Lord Dalhousie', 'Lord Curzon', 'Lord Canning', 'Lord Wellesley', 1),
+(2, 1, 'Who was known as the Iron Man of India?', 'Mahatma Gandhi', 'Subhash Chandra Bose', 'Bhagat Singh', 'Sardar Vallabhbhai Patel', 4),
+(2, 1, 'Which Indian leader played a major role in the integration of princely states?', 'Jawaharlal Nehru', 'Sardar Patel', 'Mahatma Gandhi', 'Rajendra Prasad', 2),
+(2, 1, 'The Jallianwala Bagh massacre took place in which year?', '1919', '1925', '1930', '1905', 1),
+(2, 1, 'Which ancient Indian university was destroyed by invaders in 1193?', 'Nalanda', 'Takshashila', 'Vikramshila', 'Somapura', 1);

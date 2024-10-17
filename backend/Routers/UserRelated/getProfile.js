@@ -23,7 +23,7 @@ const getProfile = async (req, res) => {
             JOIN topics t ON qh.topicId = t.topicId 
             WHERE qh.userId = ? 
             ORDER BY qh.timestamp DESC 
-            LIMIT 20`,
+            LIMIT 10`,
             [userId]
         );
 

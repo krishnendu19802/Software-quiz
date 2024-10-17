@@ -27,7 +27,7 @@ const Login = () => {
       if (response.status === 200 && response.data.token) {
         // Save token in local storage and navigate to homepage
         localStorage.setItem('token', response.data.token);
-        navigate('/home');
+        navigate('/getTopics');
       }
     } catch (error) {
         // console.log(error)
