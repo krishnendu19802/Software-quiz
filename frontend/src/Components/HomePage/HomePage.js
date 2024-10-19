@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 const HomePage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [loadingLeaderBoard, setLoadingLeaderBoard] = useState(false);
 
   const handleStartQuiz = () => {
     setLoading(true);
@@ -25,6 +26,24 @@ const HomePage = () => {
     }, 3000);
   };
 
+  const handleLeaderBoard = () => {
+    setLoadingLeaderBoard(true);
+
+    // Check if user is logged in by checking for a token in localStorage
+    const token = localStorage.getItem("token");
+
+    setTimeout(() => {
+      if (token) {
+        // If token exists, navigate to the topics page
+        navigate("/leaderboard");
+      } else {
+        // If not logged in, navigate to the login page
+        navigate("/login");
+      }
+      setLoadingLeaderBoard(false);
+    }, 3000);
+  };
+
   return (
     <section
       className="lg:w-9/12 md:w-[90%] w-[95%] mx-auto mt-12 flex flex-col md:flex-row-reverse justify-between items-center"
@@ -41,7 +60,7 @@ const HomePage = () => {
           Learn new concepts for each question
         </h1>
         <p className="border-l-4 pl-2 py-2 mb-6 text-gray-500">
-          We help you prepare for exams and quizzes{" "}
+          Have Fun playing quizzes and compete with your friends.{" "}
         </p>
         <div className="flex items-center">
           <button
@@ -59,6 +78,7 @@ const HomePage = () => {
           <button
             className="px-6 py-2 text-[#FCC822] hover:bg-[#FCC822] hover:text-white rounded inline-flex ml-3 transition-all duration-300"
             type="button"
+            onClick={handleLeaderBoard}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +94,7 @@ const HomePage = () => {
                 d="m8.25 4.5 7.5 7.5-7.5 7.5"
               />
             </svg>
-            know more
+            {loadingLeaderBoard ? "Loading..." : "LeaderBoard"}
           </button>
         </div>
       </div>

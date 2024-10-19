@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddQuestion = () => {
   const [topics, setTopics] = useState([]);
-  const [selectedTopic, setSelectedTopic] = useState('');
-  const [statement, setStatement] = useState('');
-  const [option1, setOption1] = useState('');
-  const [option2, setOption2] = useState('');
-  const [option3, setOption3] = useState('');
-  const [option4, setOption4] = useState('');
-  const [ansIndex, setAnsIndex] = useState('0'); // Default to the first option
-  const [fetchError, setFetchError] = useState(''); // Error when fetching topics
-  const [submitError, setSubmitError] = useState(''); // Error when submitting new question
+  const [selectedTopic, setSelectedTopic] = useState("");
+  const [statement, setStatement] = useState("");
+  const [option1, setOption1] = useState("");
+  const [option2, setOption2] = useState("");
+  const [option3, setOption3] = useState("");
+  const [option4, setOption4] = useState("");
+  const [ansIndex, setAnsIndex] = useState("0"); // Default to the first option
+  const [fetchError, setFetchError] = useState(""); // Error when fetching topics
+  const [submitError, setSubmitError] = useState(""); // Error when submitting new question
   const navigate = useNavigate();
   const backendUrl = process.env.REACT_APP_URL;
 
@@ -24,9 +24,9 @@ const AddQuestion = () => {
       try {
         const response = await axios.get(`${backendUrl}/getTopics`);
         setTopics(response.data);
-        setFetchError(''); // Clear any previous fetch errors
+        setFetchError(""); // Clear any previous fetch errors
       } catch (error) {
-        setFetchError('Failed to load topics.');
+        setFetchError("Failed to load topics.");
       }
     };
 
@@ -35,15 +35,22 @@ const AddQuestion = () => {
 
   const handleAddQuestion = async (e) => {
     e.preventDefault();
-    setSubmitError(''); // Reset error state for submission
+    setSubmitError(""); // Reset error state for submission
 
-    if (!selectedTopic || !statement || !option1 || !option2 || !option3 || !option4) {
-      setSubmitError('All fields are required.');
+    if (
+      !selectedTopic ||
+      !statement ||
+      !option1 ||
+      !option2 ||
+      !option3 ||
+      !option4
+    ) {
+      setSubmitError("All fields are required.");
       return;
     }
 
     try {
-      const token = localStorage.getItem('token'); // Get token from local storage
+      const token = localStorage.getItem("token"); // Get token from local storage
       const response = await axios.post(
         `${backendUrl}/addQuestion`,
         {
@@ -59,31 +66,37 @@ const AddQuestion = () => {
       );
 
       // Show success toast
-      toast.success('Question added successfully!');
+      toast.success("Question added successfully!");
 
       // Reset the form
-      setSelectedTopic('');
-      setStatement('');
-      setOption1('');
-      setOption2('');
-      setOption3('');
-      setOption4('');
-      setAnsIndex('0');
+      setSelectedTopic("");
+      setStatement("");
+      setOption1("");
+      setOption2("");
+      setOption3("");
+      setOption4("");
+      setAnsIndex("0");
     } catch (error) {
       if (error.response) {
         if (error.response.status === 401) {
           // Handle token expiration
-          if (error.response.data.message === 'Token expired. Please login again.') {
+          if (
+            error.response.data.message === "Token expired. Please login again."
+          ) {
             toast.error(error.response.data.message);
           }
-          navigate('/login'); // Redirect to login if status code is 401
+          navigate("/login"); // Redirect to login if status code is 401
         } else if (error.response.data.message || error.response.data.error) {
-          setSubmitError(error.response.data.message || error.response.data.error || 'Failed to add question.');
+          setSubmitError(
+            error.response.data.message ||
+              error.response.data.error ||
+              "Failed to add question."
+          );
         } else {
-          setSubmitError('Some error occurred.');
+          setSubmitError("Some error occurred.");
         }
       } else {
-        setSubmitError('Some error occurred.');
+        setSubmitError("Some error occurred.");
       }
     }
   };
@@ -96,11 +109,16 @@ const AddQuestion = () => {
       {fetchError && <p className="text-red-500 mb-4">{fetchError}</p>}
 
       {/* Add new question form */}
-      <form onSubmit={handleAddQuestion} className="w-full max-w-xl p-4 bg-white shadow-md rounded-lg space-y-4">
-        
+      <form
+        onSubmit={handleAddQuestion}
+        className="w-full max-w-xl p-4 bg-white shadow-md rounded-lg space-y-4"
+      >
         {/* Select Topic */}
         <div>
-          <label htmlFor="topic" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="topic"
+            className="block text-sm font-medium text-gray-700"
+          >
             Select Topic
           </label>
           <select
@@ -110,7 +128,9 @@ const AddQuestion = () => {
             className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             required
           >
-            <option value="" disabled>Select a topic</option>
+            <option value="" disabled>
+              Select a topic
+            </option>
             {topics.map((topic) => (
               <option key={topic.topicId} value={topic.topicName}>
                 {topic.topicName}
@@ -121,7 +141,10 @@ const AddQuestion = () => {
 
         {/* Input field for question statement */}
         <div>
-          <label htmlFor="statement" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="statement"
+            className="block text-sm font-medium text-gray-700"
+          >
             Question Statement
           </label>
           <input
@@ -137,7 +160,10 @@ const AddQuestion = () => {
 
         {/* Input fields for options */}
         <div>
-          <label htmlFor="option1" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="option1"
+            className="block text-sm font-medium text-gray-700"
+          >
             Option 1
           </label>
           <input
@@ -150,9 +176,12 @@ const AddQuestion = () => {
             required
           />
         </div>
-        
+
         <div>
-          <label htmlFor="option2" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="option2"
+            className="block text-sm font-medium text-gray-700"
+          >
             Option 2
           </label>
           <input
@@ -165,9 +194,12 @@ const AddQuestion = () => {
             required
           />
         </div>
-        
+
         <div>
-          <label htmlFor="option3" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="option3"
+            className="block text-sm font-medium text-gray-700"
+          >
             Option 3
           </label>
           <input
@@ -180,9 +212,12 @@ const AddQuestion = () => {
             required
           />
         </div>
-        
+
         <div>
-          <label htmlFor="option4" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="option4"
+            className="block text-sm font-medium text-gray-700"
+          >
             Option 4
           </label>
           <input
@@ -198,7 +233,10 @@ const AddQuestion = () => {
 
         {/* Select Answer Index */}
         <div>
-          <label htmlFor="ansIndex" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="ansIndex"
+            className="block text-sm font-medium text-gray-700"
+          >
             Correct Answer Index
           </label>
           <select
@@ -222,7 +260,7 @@ const AddQuestion = () => {
         <div>
           <button
             type="submit"
-            className="w-full px-4 py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 font-semibold text-white bg-[#FCC822] rounded-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             Add Question
           </button>

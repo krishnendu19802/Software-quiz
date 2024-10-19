@@ -46,6 +46,7 @@ function AppContent() {
     <div>
       {shouldShowNavbar && <Navbar />}
       <Routes>
+        <Route exact path="/" element={<HomePage />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/getTopics" element={<Topics />} />
@@ -54,7 +55,7 @@ function AppContent() {
         <Route exact path="/addTopic" element={<AddTopic />} />
         <Route exact path="/addQuestion" element={<AddQuestion />} />
         <Route exact path="/addAdmin" element={<AddAdmin />} />
-        <Route exact path="/" element={<HomePage />} />
+
         <Route exact path="/leaderboard" element={<LeaderBoard />} />
       </Routes>
     </div>
