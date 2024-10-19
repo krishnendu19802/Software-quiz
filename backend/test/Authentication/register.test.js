@@ -2,12 +2,13 @@ const request = require('supertest');
 const { app, server } = require('../../index');
 const db = require('../../config/database');
 
-beforeEach(async () => {
-    await db.promise().query('DELETE FROM users where userId!=1');  // Clear existing data except admin
-});
+// beforeEach(async () => {
+//     await db.promise().query('DELETE FROM users where userId!=1');  // Clear existing data except admin
+// });
 
 
 afterAll(async () => {
+    await db.promise().query(`delete from users where email='test3@example.com'`)
     await db.promise().end();
     await server.close();
 });
@@ -58,7 +59,7 @@ describe('Register API', () => {
     it('should return 201 if user is registered successfully', async () => {
         const res = await request(app)
             .post(route)
-            .send({ name: 'Test User', email: 'test2@example.com', password: 'password123' });
+            .send({ name: 'Test User', email: 'test3@example.com', password: 'password123' });
 
         expect(res.statusCode).toEqual(201);
         expect(res.body).toHaveProperty('message', 'User registered successfully');

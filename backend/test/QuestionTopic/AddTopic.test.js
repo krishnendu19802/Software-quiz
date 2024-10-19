@@ -5,12 +5,13 @@ const jwt = require('jsonwebtoken');
 
 // Insert dummy data before each test case
 beforeEach(async () => {
-    await db.promise().query('DELETE FROM topics');  // Clear topics table
+    // await db.promise().query('DELETE FROM topics');  // Clear topics table
     await db.promise().query('INSERT INTO topics (userId,topicName) VALUES (?,?)', [1,'Existing Topic']);  // Insert an existing topic
 });
 
 // Clean up after all tests
 afterAll(async () => {
+    await db.promise().query(`delete from topics where topicName='Existing Topic' OR topicName='New Topic 2'`)
     await db.promise().end();
     await server.close();
 });
@@ -34,7 +35,7 @@ const route = '/api/addtopic';
 const cases = [
     { case: 'no token', token: null, status: 401, error: 'Access denied. No token provided.' },
     { case: 'Non Admin', token: wrongToken, status: 401, error: 'Access denied. Admin privileges required.' },
-    { case: 'with valid token', token: adminToken, body: { topicName: 'New Topic' }, status: 201, message: 'Topic added successfully' },
+    { case: 'with valid token', token: adminToken, body: { topicName: 'New Topic 2' }, status: 201, message: 'Topic added successfully' },
     { case: 'same topic name', token: adminToken, body: { topicName: 'Existing Topic' }, status: 400, error: 'Topic already exists' },
     { case: 'missing topic name', token: adminToken, body: { topicName: '' }, status: 400, error: 'Topic name cannot be undefined or empty' },
 ];

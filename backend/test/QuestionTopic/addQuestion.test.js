@@ -5,13 +5,16 @@ const jwt = require('jsonwebtoken');
 
 // Insert dummy data before each test case
 beforeEach(async () => {
-    await db.promise().query('DELETE FROM questions');  // Clear questions table
-    await db.promise().query('DELETE FROM topics');  // Clear topics table
-    await db.promise().query('INSERT INTO topics (userId, topicName) VALUES (?, ?)', [1, 'Existing Topic']);  // Insert an existing topic
+    // await db.promise().query('DELETE FROM questions');  // Clear questions table
+    // await db.promise().query('DELETE FROM topics');  // Clear topics table
+    await db.promise().query('INSERT INTO topics (userId, topicName) VALUES (?, ?)', [1, 'Test Topic 2']);  // Insert an existing topic
 });
 
 // Clean up after all tests
 afterAll(async () => {
+    await db.promise().query(`delete from questions where topicId in (select topicId from topics where topicName='Test Topic 2')`)
+    
+    await db.promise().query(`delete from topics where topicName='Test Topic 2' OR topicName='New Topic 2'`)
     await db.promise().end();
     await server.close();
 });
@@ -43,7 +46,7 @@ const cases = [
         case: 'with valid token and valid data', 
         token: adminToken, 
         body: { 
-            topicName: 'Existing Topic', 
+            topicName: 'Test Topic 2', 
             statement: 'What is the chemical formula of water?', 
             option1: 'H2O', 
             option2: 'CO2', 
