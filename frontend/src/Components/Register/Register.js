@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const backendUrl = process.env.REACT_APP_URL;
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    setError(''); // Reset error state
+    setError(""); // Reset error state
 
     if (!name || !email || !password) {
-      setError('Name, email, and password are required.');
+      setError("Name, email, and password are required.");
       return;
     }
 
@@ -28,14 +28,16 @@ const Register = () => {
       });
 
       // On successful registration, navigate to the login page
-      navigate('/login');
+      navigate("/login");
     } catch (error) {
       if (error.response) {
         setError(
-          error.response.data.message || error.response.data.error || 'Some error occurred'
+          error.response.data.message ||
+            error.response.data.error ||
+            "Some error occurred"
         );
       } else {
-        setError('Some error occurred');
+        setError("Some error occurred");
       }
     }
   };
@@ -43,10 +45,15 @@ const Register = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded-lg">
-        <h2 className="text-2xl font-bold text-center text-gray-900">Register</h2>
+        <h2 className="text-2xl font-bold text-center text-gray-900">
+          Register
+        </h2>
         <form className="space-y-4" onSubmit={handleRegister}>
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700"
+            >
               Name
             </label>
             <input
@@ -56,11 +63,14 @@ const Register = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#FCC822] focus:border-[#FCC822]"
             />
           </div>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
               Email
             </label>
             <input
@@ -70,11 +80,14 @@ const Register = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#FCC822] focus:border-[#FCC822]"
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               Password
             </label>
             <input
@@ -84,7 +97,7 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#FCC822] focus:border-[#FCC822]"
             />
           </div>
 
@@ -94,18 +107,18 @@ const Register = () => {
           <div>
             <button
               type="submit"
-              className="w-full px-4 py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 font-semibold text-white bg-[#FCC822] rounded-md hover:bg-[#FCC822] focus:outline-none focus:ring-2 focus:ring-[#FCC822]"
             >
               Register
             </button>
           </div>
 
           <div className="text-sm text-center text-gray-600">
-            Already have an account?{' '}
+            Already have an account?{" "}
             <button
               type="button"
-              onClick={() => navigate('/login')}
-              className="text-blue-600 hover:underline"
+              onClick={() => navigate("/login")}
+              className="text-[#FCC822] hover:underline"
             >
               Login
             </button>
