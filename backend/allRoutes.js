@@ -10,12 +10,15 @@ const userMiddleware = require('./Helper/userMiddleware');
 const getQuestions = require('./Routers/UserRelated/getQuestions');
 const submitQuiz = require('./Routers/UserRelated/submitQuiz');
 const getProfile = require('./Routers/UserRelated/getProfile');
+const getLeaderboard = require('./Routers/UserRelated/getLeaderBoard');
 const router = express.Router();
 
 //get requests
 router.get('/getTopics',getTopics)
 router.get('/getQuestions/:topicId',userMiddleware,getQuestions)
 router.get('/getProfile',userMiddleware,getProfile)
+router.get('/getLeaderBoard',userMiddleware,getLeaderboard)
+
 
 
 
