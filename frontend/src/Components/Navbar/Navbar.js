@@ -78,6 +78,9 @@ const Navbar = () => {
                 <li className="hover:text-yellow-500">
                   <Link to="/addQuestion">Add Questions</Link>
                 </li>
+                <li className="hover:text-yellow-500">
+                  <Link to="/addAdmin">Add Admin</Link>
+                </li>
               </>
             ) : null}
           </ul>
