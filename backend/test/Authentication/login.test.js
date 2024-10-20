@@ -5,7 +5,7 @@ const { encrypt } = require('../../Helper/PasswordHashing');
 
 // Insert dummy data before each test case
 beforeEach(async () => {
-    await db.promise().query('DELETE FROM users where userId!=1');  // Clear any existing data
+    // await db.promise().query('DELETE FROM users where userId!=1');  // Clear any existing data
     const hashedPassword = await encrypt('password123');
     await db.promise().query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', ['Test User', 'test@example.com', hashedPassword]);
 });

@@ -3,6 +3,7 @@ const db = require('../../config/database');
 const addQuestion = async (req, res) => {
     const { topicName, statement, option1, option2, option3, option4, ansIndex } = req.body;
     const userId = req.user.userId;
+    // console.log(req.body)
 
     // Check if all required fields are present and non-empty
     if (
@@ -12,7 +13,7 @@ const addQuestion = async (req, res) => {
         !option2 || option2.trim() === '' ||
         !option3 || option3.trim() === '' ||
         !option4 || option4.trim() === '' ||
-        !ansIndex|| typeof ansIndex !== 'number'
+        ansIndex===undefined|| typeof ansIndex !== 'number'
     ) {
         return res.status(400).json({ error: 'Please provide valid topic name, statement, options, and answer index' });
     }

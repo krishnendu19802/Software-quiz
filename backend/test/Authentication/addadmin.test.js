@@ -6,13 +6,14 @@ const jwt = require('jsonwebtoken');
 
 // Insert dummy data before each test case
 beforeEach(async () => {
-    await db.promise().query('DELETE FROM users where userId != 1');  // Clear any existing data
+    // await db.promise().query('DELETE FROM users where userId != 1');  // Clear any existing data
     const hashedPassword = await encrypt('password123');
     await db.promise().query('INSERT INTO users (name, email, password, admin) VALUES (?, ?, ?, ?)', ['Admin User', 'admin@example.com', hashedPassword, 1]);  // Insert an admin user
 });
 
 // Clean up after all tests
 afterAll(async () => {
+    await db.promise().query(`delete from users where email='newadmin1@example.com'`)
     await db.promise().end();
     await server.close();
 });
@@ -35,7 +36,7 @@ const cases = [
     { name: 'Admin', email: 'admin@example.com', case: 'password missing' }, // Password missing
     { name: 'Admin', password: 'password', case: 'email missing' }, // Email missing
     { name: 'Admin', email: 'admin@example.com', password: 'password' }, // Admin email already exists
-    { name: 'New Admin', email: 'newadmin@example.com', password: 'password123' }, // Valid new admin
+    { name: 'New Admin', email: 'newadmin1@example.com', password: 'password123' }, // Valid new admin
 ];
 
 describe('Add Admin API', () => {

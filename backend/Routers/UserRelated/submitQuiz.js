@@ -1,7 +1,7 @@
 const db = require('../../config/database');
 
 const submitQuiz = async (req, res) => {
-    const { userId } = req.user;  // Extract userId from the token
+    const { userId,email } = req.user;  // Extract userId from the token
     const { questions } = req.body;  // questions should be an array with objects containing questionId, topicId, status
 
     if (!questions || !Array.isArray(questions) || questions.length !== 10) {
@@ -13,6 +13,9 @@ const submitQuiz = async (req, res) => {
     try {
         // Start the transaction
         await db.promise().query('START TRANSACTION');
+        const [resp]=await db.promise().query('select * from users where userId=? ',[userId])
+        if(resp.length===0)
+            return res.status(401).send({error:'User not found'})
 
         // Insert each question's result into questionHistory
         for (const question of questions) {
